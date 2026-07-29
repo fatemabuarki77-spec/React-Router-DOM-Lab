@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
+import { createProduct } from "../services/productsServices";
 
 function CreateProduct() {
   const [formData, setFormData] = useState({
@@ -16,10 +17,8 @@ function CreateProduct() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const createdStudent = await axios.post(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/products`,
-        formData,
-      );
+      const createdStudent = await createProduct(formData);
+      setFormData(createdStudent);
       navigate("/products");
     } catch (err) {
       ("ERROR");
@@ -65,7 +64,7 @@ function CreateProduct() {
           onChange={handleChange}
         />
 
-        <button>Create Student</button>
+        <button>Create Product</button>
       </form>
     </div>
   );

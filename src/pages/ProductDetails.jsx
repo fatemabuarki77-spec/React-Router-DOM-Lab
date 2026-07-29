@@ -2,18 +2,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Spin } from "antd";
-
+import { getOneProduct } from "../services/productsServices";
 function ProductDetails() {
   const [products, setProducts] = useState(null);
   const { productId } = useParams();
 
   async function getProductList() {
     try {
-      const response = await axios.get(
-        `${import.meta.env.VITE_BACKEND_BASE_URL}/products/${productId}`,
-      );
-
-      setProducts(response.data);
+      const response = await getOneProduct(productId);
+      setProducts(response);
     } catch (err) {
       console.log(err);
     }
