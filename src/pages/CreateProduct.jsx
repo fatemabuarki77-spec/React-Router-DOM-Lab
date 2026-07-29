@@ -17,9 +17,9 @@ function CreateProduct() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
-      const createdStudent = await createProduct(formData);
-      setFormData(createdStudent);
-      navigate("/products");
+      const createdProduct = await createProduct(formData);
+      setFormData(createdProduct);
+      navigate(`/products/${createdProduct._id}`);
     } catch (err) {
       ("ERROR");
       console.log(err);

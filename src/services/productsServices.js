@@ -15,10 +15,7 @@ async function getOneProduct(productId) {
 }
 
 async function createProduct(body) {
-  const response = await axios.post(
-    `${import.meta.env.VITE_BACKEND_BASE_URL}/products`,
-    body,
-  );
+  const response = await api.post(`/products`, body);
   return response.data;
 }
 
