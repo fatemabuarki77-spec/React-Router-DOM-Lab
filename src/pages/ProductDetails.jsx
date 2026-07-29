@@ -5,14 +5,21 @@ import { Spin } from "antd";
 import { getOneProduct } from "../services/productsServices";
 function ProductDetails() {
   const [products, setProducts] = useState(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { productId } = useParams();
 
   async function getProductList() {
     try {
+      setLoading(true);
+      setError(null);
       const response = await getOneProduct(productId);
       setProducts(response);
+      setError(false);
+      setLoading(false);
     } catch (err) {
-      console.log(err);
+      setError(`Cannot get all products ${err.message}`);
+      setLoading(false);
     }
   }
 
@@ -20,6 +27,11 @@ function ProductDetails() {
     getProductList();
   }, []);
 
+  if (loading) {
+    return <Spin spinning={true} size="large" />;
+  } else if (error) {
+    return <p>Error: {error}</p>;
+  }
   return (
     <div>
       <h1> Product Details</h1>

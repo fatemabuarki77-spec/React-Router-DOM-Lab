@@ -4,6 +4,8 @@ import axios from "axios";
 import { createProduct } from "../services/productsServices";
 
 function CreateProduct() {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -17,12 +19,14 @@ function CreateProduct() {
   async function handleSubmit(event) {
     event.preventDefault();
     try {
+      setLoading(true);
+      setError(null);
       const createdProduct = await createProduct(formData);
       setFormData(createdProduct);
       navigate(`/products/${createdProduct._id}`);
     } catch (err) {
-      ("ERROR");
-      console.log(err);
+      setError(`Cannot get all products ${err.message}`);
+      setLoading(false);
     }
   }
 

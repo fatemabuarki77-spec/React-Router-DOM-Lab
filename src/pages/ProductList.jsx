@@ -5,14 +5,19 @@ import { index } from "../services/productsServices";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
-
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   async function getProductList() {
     try {
+      setLoading(true);
+      setError(null);
       const response = await index();
       setProducts(response);
+      setError(false);
+      setLoading(false);
     } catch (err) {
-      ("ERROR");
-      console.log(err);
+      setError(`Cannot get all products ${err.message}`);
+      setLoading(false);
     }
   }
   useEffect(() => {
